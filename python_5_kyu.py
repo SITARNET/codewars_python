@@ -24,12 +24,26 @@
 # The numbering starts at 1. The format is n: string. Notice the colon and space in between.
 # Examples: (Input --> Output)
 
-def number(lines):
-    count = 1
-    line = []
-    for i in lines:
-        line.append(str(count) + ': ' + i)
-        count += 1
-    return line
+# def number(lines):
+#     count = 1
+#     line = []
+#     for i in lines:
+#         line.append(str(count) + ': ' + i)
+#         count += 1
+#     return line
+#
+# print(number(["a", "b", "c"]))
 
-print(number(["a", "b", "c"]))
+# 3. Implement the function unique_in_order which takes as argument a sequence and returns a list of items
+# without any elements with the same value next to each other and preserving the original order of elements.
+
+def unique_in_order(sequence):
+    res = []
+    prev = None
+    for i in sequence[0:]:
+        if i != prev:
+            res.append(i)
+            prev = i
+    return res
+
+print(unique_in_order('AAAABBBCCDAABBB'))
