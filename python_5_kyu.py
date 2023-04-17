@@ -51,14 +51,31 @@
 # 4. You are given an array(list) strarr of strings and an integer k. Your task is to return
 # the first longest string consisting of k consecutive strings taken in the array.
 
-def longest_consec(strarr, k):
-    result = ""
+# def longest_consec(strarr, k):
+#     result = ""
+#
+#     if k > 0 and len(strarr) >= k:
+#         for index in range(len(strarr) - k + 1):
+#             s = ''.join(strarr[index:index+k])
+#             if len(s) > len(result):
+#                 result = s
+#     return result
+#
+# print(longest_consec(["zone", "abigail", "theta", "form", "libe", "zas"], 2))
 
-    if k > 0 and len(strarr) >= k:
-        for index in range(len(strarr) - k + 1):
-            s = ''.join(strarr[index:index+k])
-            if len(s) > len(result):
-                result = s
-    return result
+# 5. There is an array with some numbers. All numbers are equal except for one. Try to find it!
+#
+# find_uniq([ 1, 1, 1, 2, 1, 1 ]) == 2
+# find_uniq([ 0, 0, 0.55, 0, 0 ]) == 0.55
+# It’s guaranteed that array contains at least 3 numbers.
+# The tests contain some very huge arrays, so think about performance.
 
-print(longest_consec(["zone", "abigail", "theta", "form", "libe", "zas"], 2))
+def find_uniq(arr):
+    arr.sort()
+    if (arr[0] < arr[len(arr) - 1] and arr[0] < arr[len(arr) - 2]):
+        n = arr[0]
+    else:
+        n = arr[len(arr) - 1]
+    return n
+
+print(find_uniq([ 2, 3, 3, 3, 3, 3]))
