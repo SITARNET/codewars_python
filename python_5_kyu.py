@@ -37,13 +37,28 @@
 # 3. Implement the function unique_in_order which takes as argument a sequence and returns a list of items
 # without any elements with the same value next to each other and preserving the original order of elements.
 
-def unique_in_order(sequence):
-    res = []
-    prev = None
-    for i in sequence[0:]:
-        if i != prev:
-            res.append(i)
-            prev = i
-    return res
+# def unique_in_order(sequence):
+#     res = []
+#     prev = None
+#     for i in sequence[0:]:
+#         if i != prev:
+#             res.append(i)
+#             prev = i
+#     return res
+#
+# print(unique_in_order('AAAABBBCCDAABBB'))
 
-print(unique_in_order('AAAABBBCCDAABBB'))
+# 4. You are given an array(list) strarr of strings and an integer k. Your task is to return
+# the first longest string consisting of k consecutive strings taken in the array.
+
+def longest_consec(strarr, k):
+    result = ""
+
+    if k > 0 and len(strarr) >= k:
+        for index in range(len(strarr) - k + 1):
+            s = ''.join(strarr[index:index+k])
+            if len(s) > len(result):
+                result = s
+    return result
+
+print(longest_consec(["zone", "abigail", "theta", "form", "libe", "zas"], 2))
