@@ -268,34 +268,34 @@
 # <вложенный шаблон>
 # {% endcall%}
 
-from jinja2 import Template
-
-persons = [
-    {"name": "Алксей", "old": 18, "weight": 78.5},
-    {"name": "Николай", "old": 20, "weight": 80},
-    {"name": "Дима", "old": 16, "weight": 75.5}
-]
-
-html = """
-{% macro list_users(list_of_user) -%}
-<ul>
-{%- for u in list_of_user -%}
-    <li>{{u.name}} {{caller(u)}}</li>
-{%- endfor %}
-</ul>
-{%- endmacro %}
-
-{% call(user) list_users(users) %}
-    <ul>
-    <li>age: {{user.old}}</li>
-    <li>weight: {{user.weight}}</li>
-    </ul>
-{% endcall -%}
-"""
-
-tm = Template(html)
-msg = tm.render(users=persons)
-print(msg)
+# from jinja2 import Template
+#
+# persons = [
+#     {"name": "Алксей", "old": 18, "weight": 78.5},
+#     {"name": "Николай", "old": 20, "weight": 80},
+#     {"name": "Дима", "old": 16, "weight": 75.5}
+# ]
+#
+# html = """
+# {% macro list_users(list_of_user) -%}
+# <ul>
+# {%- for u in list_of_user -%}
+#     <li>{{u.name}} {{caller(u)}}</li>
+# {%- endfor %}
+# </ul>
+# {%- endmacro %}
+#
+# {% call(user) list_users(users) %}
+#     <ul>
+#     <li>age: {{user.old}}</li>
+#     <li>weight: {{user.weight}}</li>
+#     </ul>
+# {% endcall -%}
+# """
+#
+# tm = Template(html)
+# msg = tm.render(users=persons)
+# print(msg)
 
 # {% macro list_users(list_of_user) -%}
 # <ul>
@@ -312,3 +312,17 @@ print(msg)
 #     <li>weight: {{user.weight}}
 #     </ul>
 # {% endcall -%}
+
+# 4. Загрузчики шаблонов - FileSystemLoader, PackageLoader, DictLoader, FunctionLoader
+
+# https://jinja.palletsprojects.com/en/3.0.x/api/
+
+# FileSystemLoader - для загрузки из файловой системы
+# PackageLoader - для загрузки шаблонов из пакета
+# DictLoader - для загрузки шаблонов из словаря
+# FunctionLoader - для загрузки на основе функции
+# PrefixLoader - загрузчик, содержащий словарь для постраения подкаталогов
+# ChoiceLoader - загрузчик, содержащий список других загрузчиков
+# (если один не сработает, выбирается следующий)
+# ModuleLoader - загрузчик для скомпилированных шаблонов
+

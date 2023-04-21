@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <base href="https://site.com">
+    <title>Про программирование</title>
+</head>
+<body>
+
+<ul>
+    {% for u in users %}
+        <li>{{u.name}}
+    {% endfor -%}
+</ul>
+
+</body>
+</html>
