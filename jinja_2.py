@@ -326,3 +326,10 @@
 # (если один не сработает, выбирается следующий)
 # ModuleLoader - загрузчик для скомпилированных шаблонов
 
+# 5. Конструкции include и import
+
+# Конструкция include
+# {% include <путь к файлу шаблона> %}
+# {% include['page1.htm', 'page2.htm'] ignore missing %}
+
+# Конструкция import

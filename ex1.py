@@ -6,17 +6,10 @@ person = [
     {"name": "Иван", "old": 33, "weigth": 94.0}
 ]
 
-def loadTpl(path):
-    if path == "index":
-        return '''Имя {{u.name}}, возраст {{u.old}}'''
-    else:
-        return '''Данные: {{u}}'''
-
-# file_loader = FileSystemLoader('templates')
-file_loader = FunctionLoader(loadTpl)
+file_loader = FileSystemLoader('templates')
 env = Environment(loader=file_loader)
 
-tm = env.get_template('index')
-msg = tm.render(u=person[0])
+tm = env.get_template('page.htm')
+msg = tm.render(domain='http://site.com', title='Про Jinja')
 
 print(msg)
