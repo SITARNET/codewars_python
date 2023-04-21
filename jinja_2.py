@@ -147,28 +147,168 @@
 #     <фрагмент при истинности условия>
 # {% endf %}
 
+# from jinja2 import Template
+#
+# cities = [{'id': 1, 'city': 'Киев'},
+#           {'id': 2, 'city': 'Львов'},
+#           {'id': 3, 'city': 'Харьков'},
+#           {'id': 4, 'city': 'Ровно'},
+#           {'id': 5, 'city': 'Винница'}]
+#
+# link = '''<select name="cities">
+# {% for c in cities -%}
+# {% if c.id > 3 -%}
+#     <option value="{{c['id']}}">{{c['city']}}</option>
+# {% elif c.city == 'Львов' -%}
+#     <option>{{c['city']}}</option>
+# {% else -%}
+#     {{c['city']}}
+# {% endif -%}
+# {% endfor -%}
+# <select>'''
+#
+# # -% - убирает перенос строки!
+#
+# tm = Template(link)
+# msg = tm.render(cities=cities)
+# print(msg)
+
+# 3. Фильтры и макросы macro, call
+
+# sum - вычисление суммы поля коллекции
+# sum(iterable, attribute=None, start=0)
+
+# from jinja2 import Template
+#
+# cars = [
+#     {'model': 'Ауди', 'price': 23400},
+#     {'model': 'Шкодв', 'price': 25200},
+#     {'model': 'БМВ', 'price': 33000},
+#     {'model': 'Фиат', 'price': 31100},
+#     {'model': 'Рено', 'price': 21200},
+# ]
+#
+# tpl = "Суммарная цена автомобилей: {{ cs | sum(attribute='price')}}"
+# tm = Template(tpl)
+# msg = tm.render(cs=cars)
+# print(msg)
+
+# from jinja2 import Template
+#
+# digs = [1, 2, 3, 4, 5]
+#
+# tpl = "Sum: {{ cs | sum}}"
+# tm = Template(tpl)
+# msg = tm.render(cs=digs)
+# print(msg)
+
+# https://jinja.palletsprojects.com/en/2.11.x/templates/#builtin-filters - список фильтров
+
+# from jinja2 import Template
+#
+# cars = [
+#     {'model': 'Ауди', 'price': 23400},
+#     {'model': 'Шкодв', 'price': 25200},
+#     {'model': 'БМВ', 'price': 33000},
+#     {'model': 'Фиат', 'price': 31100},
+#     {'model': 'Рено', 'price': 21200},
+# ]
+#
+# tpl = "Максимальная цена автомобилей: {{ (cs | max(attribute='price')).price}}"
+# tm = Template(tpl)
+# msg = tm.render(cs=cars)
+# print(msg)
+
+# Блок Filter
+
+# {%filter<название фильтра>%}
+# <фрагмент для применения фильтра>
+# {%endfilter%}
+
+# from jinja2 import Template
+#
+# persons = [
+#     {"name": "Алксей", "old": 18, "weight": 78.5},
+#     {"name": "Николай", "old": 20, "weight": 80},
+#     {"name": "Дима", "old": 16, "weight": 75.5}
+# ]
+#
+# tml = """
+# {%- for u in users -%}
+# {% filter upper %}{{u.name}}{% endfilter %}
+# {% endfor -%}
+# """
+#
+# tm = Template(tml)
+# msg = tm.render(users=persons)
+# print(msg)
+
+# Макроопределения
+# DRY - Don`t Repeat Yourself (не повторяйся)
+
+# from jinja2 import Template
+#
+# html = """
+# {% macro input(name, value='', type='text', size=20) -%}
+#     <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}" size="{{ size }}">
+# {%- endmacro %}
+#
+# <p>{{ input('username') }}
+# <p>{{ input('email') }}
+# <p>{{ input('password') }}
+# """
+#
+# tm = Template(html)
+# msg = tm.render()
+# print(msg)
+
+# Вложенные макросы
+
+# {% call[(параметры)] <вызов макроса> %}
+# <вложенный шаблон>
+# {% endcall%}
+
 from jinja2 import Template
 
-cities = [{'id': 1, 'city': 'Киев'},
-          {'id': 2, 'city': 'Львов'},
-          {'id': 3, 'city': 'Харьков'},
-          {'id': 4, 'city': 'Ровно'},
-          {'id': 5, 'city': 'Винница'}]
+persons = [
+    {"name": "Алксей", "old": 18, "weight": 78.5},
+    {"name": "Николай", "old": 20, "weight": 80},
+    {"name": "Дима", "old": 16, "weight": 75.5}
+]
 
-link = '''<select name="cities">
-{% for c in cities -%}
-{% if c.id > 3 -%}
-    <option value="{{c['id']}}">{{c['city']}}</option>
-{% elif c.city == 'Львов' -%}
-    <option>{{c['city']}}</option>
-{% else -%}
-    {{c['city']}}
-{% endif -%}
-{% endfor -%}
-<select>'''
+html = """
+{% macro list_users(list_of_user) -%}
+<ul>
+{%- for u in list_of_user -%}
+    <li>{{u.name}} {{caller(u)}}</li>
+{%- endfor %}
+</ul>
+{%- endmacro %}
 
-# -% - убирает перенос строки!
+{% call(user) list_users(users) %}
+    <ul>
+    <li>age: {{user.old}}</li>
+    <li>weight: {{user.weight}}</li>
+    </ul>
+{% endcall -%}
+"""
 
-tm = Template(link)
-msg = tm.render(cities=cities)
+tm = Template(html)
+msg = tm.render(users=persons)
 print(msg)
+
+# {% macro list_users(list_of_user) -%}
+# <ul>
+# {% for u in users -%}
+#     <li>{{u.name}} {{caller(u)}}
+# {%- endfor %}
+# </ul>
+# {%- endmacro %}
+# _________________________________
+#
+# { call(user) list_users(users) %}
+#     <ul>
+#     <li>age: {{user.age}}
+#     <li>weight: {{user.weight}}
+#     </ul>
+# {% endcall -%}
