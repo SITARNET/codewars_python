@@ -333,3 +333,24 @@
 # {% include['page1.htm', 'page2.htm'] ignore missing %}
 
 # Конструкция import
+
+# 6. Наследование расширение шаблонов
+
+# {% block <имя блока> %}
+# {% endblock %}
+
+# {{ self.title() }} - подставляеться всё тоже самое с именованого блока (например title)
+
+# {{ block.content }}
+# {{ super() }} - обращение к блоку базового шаблона
+# {{ endblock }}
+
+# {% block item scoped %}{{li}}{% endblock %}
+# scoped - чтобы переменная li существовала  в нутри блока.
+
+# base.tpl -> child_1.htm -> child2.htm
+
+# base.tpl - такой же как и ex_main.htm
+# child_1.htm - {% extends 'base.tpl' %}...
+# child_2.htm - {% extends 'child_1.htm' %}...
+

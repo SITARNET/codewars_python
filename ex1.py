@@ -1,15 +1,11 @@
-from jinja2 import Environment, FileSystemLoader, FunctionLoader
+from jinja2 import Environment, FileSystemLoader
 
-person = [
-    {"name": "Алексей", "old": 18, "weigth": 78.5},
-    {"name": "Николай", "old": 28, "weigth": 82.3},
-    {"name": "Иван", "old": 33, "weigth": 94.0}
-]
+subs = ["Математика", "Физика", "Информатика", "Украинский"]
 
 file_loader = FileSystemLoader('templates')
 env = Environment(loader=file_loader)
 
-tm = env.get_template('page.htm')
-msg = tm.render(domain='http://site.com', title='Про Jinja')
+template = env.get_template('about.htm')
+output = template.render(list_table=subs)
 
-print(msg)
+print(output)
